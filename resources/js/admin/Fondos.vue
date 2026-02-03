@@ -228,13 +228,20 @@
                   class="form-control" /> </div>
               <div class="col-md-6"> <label>Código del expediente</label> <input v-model="nuevoExpediente.codigo"
                   class="form-control" /> </div>
+              <div class="col-12">
+                <label>Descripción del expediente</label>
+                <textarea v-model="nuevoExpediente.descripcion_expediente" class="form-control" rows="3"
+                  placeholder="Describe el contenido y alcance del expediente">
+  </textarea>
+              </div>
+
               <div class="col-md-6"> <label>Etapa de ciclo vital</label> <select v-model="nuevoExpediente.estado"
                   class="form-select">
                   <option value="en_tramite">En trámite</option>
                   <option value="en_concentracion">En concentración</option>
                   <option value="en_historico">En histórico</option>
                 </select> </div>
-              <div class="col-md-6"> <label>Fecha de apertura</label> <input type="date"
+              <div class="col-md-6"> <label>Fecha de captura</label> <input type="date"
                   v-model="nuevoExpediente.fecha_apertura" class="form-control" disabled /> </div>
 
               <div class="col-md-6"> <label>Fecha de creación</label> <input type="date"
@@ -274,6 +281,23 @@
                   <option value="Legal">Legal</option>
                   <option value="Contable">Contable</option>
                 </select> </div>
+              <div class="col-md-6">
+                <label>Tradición documental</label>
+                <select v-model="nuevoExpediente.tradicion_documental" class="form-select">
+                  <option disabled value="">Seleccione una opción</option>
+                  <option value="Original">Original</option>
+                  <option value="Copia">Copia</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label>Soporte documental</label>
+                <select v-model="nuevoExpediente.soporte_documental" class="form-select">
+                  <option disabled value="">Seleccione una opción</option>
+                  <option value="Original">Original</option>
+                  <option value="Copia">Copia</option>
+                </select>
+              </div>
               <div class="col-md-6"> <label>Preservación</label> <select v-model="nuevoExpediente.preservacion"
                   class="form-select">
                   <option value="Si">Si</option>
@@ -336,6 +360,9 @@ const nuevoExpediente = ref({
   clasificacion: 'Pública',       // Clasificación (Pública, Confidencial, Reservada)
   caracter: 'Administrativo',     // Carácter (Administrativo, Legal, Contable)
   preservacion: 'Si',             // Método u observación sobre preservación
+  descripcion_expediente: '',
+  tradicion_documental: null,
+  soporte_documental: null,
   observacion: ''                 // Observaciones generales
 })
 
@@ -551,7 +578,10 @@ const crearExpediente = async () => {
       clasificacion: 'Pública',
       caracter: 'Administrativo',
       preservacion: '',
-      observacion: ''
+      observacion: '',
+      descripcion_expediente: '',
+      tradicion_documental: '',
+      soporte_documental: ''
     }
 
     selectedSerie.value = null

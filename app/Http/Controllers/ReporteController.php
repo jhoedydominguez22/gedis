@@ -18,10 +18,17 @@ class ReporteController extends Controller
 {
     $user = Auth::user();
 
+    // 🔒 Seguridad: si no hay usuario autenticado
+    if (!$user) {
+        return response()->json([
+            'message' => 'No autenticado'
+        ], 401);
+    }
+
     $query = Expediente::query();
 
-    // 🔥 Filtrar por la dependencia del usuario (no por ubicación_topográfica)
-    if ($user->id_dependencia) {
+    // 🔥 Filtrar por dependencia del usuario
+    if (!empty($user->id_dependencia)) {
         $query->where('id_dependencia', $user->id_dependencia);
     }
 
@@ -32,11 +39,14 @@ class ReporteController extends Controller
 
     // Fechas
     if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
-        $query->whereBetween('fecha_apertura', [$request->fecha_inicio, $request->fecha_fin]);
+        $query->whereBetween('fecha_apertura', [
+            $request->fecha_inicio,
+            $request->fecha_fin
+        ]);
     } elseif ($request->filled('fecha_inicio')) {
-        $query->where('fecha_apertura', '>=', $request->fecha_inicio);
+        $query->whereDate('fecha_apertura', '>=', $request->fecha_inicio);
     } elseif ($request->filled('fecha_fin')) {
-        $query->where('fecha_apertura', '<=', $request->fecha_fin);
+        $query->whereDate('fecha_apertura', '<=', $request->fecha_fin);
     }
 
     // Fondo
@@ -70,7 +80,7 @@ class ReporteController extends Controller
         $query->where('id_subserie', $request->id_subserie);
     }
 
-    // Relaciones
+    // Cargar relaciones (EAGER LOADING)
     $query->with([
         'serie.seccion.fondo',
         'serie.seccion.subfondo',
@@ -78,8 +88,9 @@ class ReporteController extends Controller
         'unidadesDocumentales',
     ]);
 
-    return response()->json($query->get());
+    return response()->json($query->get(), 200);
 }
+
 
 
 

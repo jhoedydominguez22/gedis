@@ -12,6 +12,7 @@ class Expediente extends Model
         'nombre',
         'codigo',
         'clave',
+        'descripcion_expediente',
         'id_serie',
         'id_subserie',
         'estado',
@@ -30,7 +31,8 @@ class Expediente extends Model
         'observacion',
         'id_dependencia',
         'id_departamento',
-
+        'tradicion_documental',
+        'soporte_documental',
     ];
 
     public function serie()

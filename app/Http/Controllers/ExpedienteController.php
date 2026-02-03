@@ -96,6 +96,9 @@ class ExpedienteController extends Controller
             'caracter'               => 'required|in:Administrativo,Legal,Contable',
             'preservacion'           => 'nullable|string|max:255',
             'observacion'            => 'nullable|string|max:1000',
+            'descripcion_expediente' => 'nullable|string',
+            'tradicion_documental'   => 'nullable|in:Original,Copia',
+            'soporte_documental'     => 'nullable|in:Original,Copia',
         ]);
 
         $user = auth()->user();
@@ -138,6 +141,9 @@ class ExpedienteController extends Controller
             'caracter'               => $request->caracter,
             'preservacion'           => $request->preservacion,
             'observacion'            => $request->observacion,
+            'descripcion_expediente' => $request->descripcion_expediente,
+            'tradicion_documental'   => $request->tradicion_documental,
+            'soporte_documental'     => $request->soporte_documental,
             'id_dependencia'         => $user->id_dependencia,
             'id_departamento'        => $user->id_departamento,
         ]);

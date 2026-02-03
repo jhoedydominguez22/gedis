@@ -221,7 +221,7 @@
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Fecha de Apertura</label>
+                <label class="form-label">Fecha de Captura</label>
                 <input type="date" class="form-control" v-model="expedienteActual.fecha_apertura">
               </div>
 
